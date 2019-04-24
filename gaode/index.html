@@ -1,0 +1,112 @@
+﻿<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>hello word 高德地图调用demo</title>
+    <link rel="stylesheet" href="https://cache.amap.com/lbs/static/main1119.css"/>
+    <script src="https://cache.amap.com/lbs/static/es5.min.js"></script>
+    <style>
+        #panel {
+            position: absolute;
+            background-color: white;
+            max-height: 90%;
+            overflow-y: auto;
+            top: 10px;
+            right: 10px;
+            width: 280px;
+        }
+    </style>
+</head>
+<body>
+<div id="container"></div>
+<div id="myPageTop">
+    <table>
+        <tr>
+            <td>
+                <input type="text" placeholder="请输入关键字进行搜索" id="tipinput">
+            </td>
+        </tr>
+    </table>
+</div>
+<div id="panel"></div>
+<div class="button-group">
+	<input id="en" type="button" class="button" value="显示英文底图" />
+	<input id="zh_en" type="button" class="button" value="显示中英文对照底图" />
+	<input id="zh_cn" type="button" class="button" value="显示中文底图" />
+</div>
+<script src="https://webapi.amap.com/maps?v=1.4.6&key=8c612bf85b5808c13ec7567039edf945&&plugin=AMap.Scale,AMap.OverView,AMap.ToolBar,AMap.Autocomplete,AMap.PlaceSearch,AMap.AdvancedInfoWindow"></script>
+<script type="text/javascript" src="https://cache.amap.com/lbs/static/addToolbar.js"></script>
+<script>
+    var map = new AMap.Map('container', {
+        resizeEnable: true,
+        zoom:9,
+        center: [101.5, 36.60923],
+		isHotspot: true,
+		layers: [
+            new AMap.TileLayer.Satellite(),
+            new AMap.TileLayer.RoadNet()
+        ],
+    });
+	
+	var placeSearch = new AMap.PlaceSearch();  //构造地点查询类
+    var infoWindow=new AMap.AdvancedInfoWindow({});
+    map.on('hotspotclick', function(result) {
+        placeSearch.getDetails(result.id, function(status, result) {
+            if (status === 'complete' && result.info === 'OK') {
+                placeSearch_CallBack(result);
+            }else{
+				console.log(status);
+			}
+        });
+    });
+    //回调函数
+    function placeSearch_CallBack(data) { //infoWindow.open(map, result.lnglat);
+        var poiArr = data.poiList.pois;
+        var location = poiArr[0].location;
+        infoWindow.setContent(createContent(poiArr[0]));
+        infoWindow.open(map,location);
+    }
+    function createContent(poi) {  //信息窗体内容
+        var s = [];
+        s.push('<div class="info-title">'+poi.name+'</div><div class="info-content">'+"地址：" + poi.address);
+        s.push("电话：" + poi.tel);
+        s.push("类型：" + poi.type);
+        s.push('<div>');
+        return s.join("<br>");
+    }
+	
+	['en', 'zh_en', 'zh_cn'].forEach(function(btn) {
+		var button = document.getElementById(btn);
+		AMap.event.addDomListener(button,'click',clickListener)
+    });
+	
+	var scale = new AMap.Scale({
+        visible: true
+    }),
+    overView = new AMap.OverView({
+        visible: true
+    });
+	overView.show();
+    map.addControl(scale);
+    map.addControl(overView);
+    var auto = new AMap.Autocomplete({
+        input: "tipinput"
+    });
+
+	
+    function toggleScale(checkbox) {
+        if (checkbox.checked) {
+            scale.show();
+        } else {
+            scale.hide();
+        }
+    }
+
+    function clickListener() {
+        map.setLang(this.id);
+    }
+</script>
+</body>
+</html>
