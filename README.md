@@ -1,13 +1,13 @@
-# webgis
+﻿# webgis
 + webgis development
 
 
 
-# 关于本站内容
+# Description
 ====================================
-+ 借助GitHub分享一下我从网上搜集或自己写的webgis源代码，所有源代码都可以正常运行，如果你下载后的代码无法正常显示，可与我取得联系。
-+ 如果你需要下载源代码，并非本站所有代码你都需要下载，你可知只下载你所感兴趣的。
-+ 由于时间原因在webgis上投入的较少，如果有写的不好或者有问题的地方，欢迎各位大牛指正。
++ Use GitHub to share the webgis source code I collected from the Internet or write myself. All source code can run normally. If the downloaded code does not display properly, you can contact me.
++ If you need to download the source code, you don't need to download all the code on this site. You can only download the ones you are interested in.
++ Due to the lack of time invested in webgis, if you have a bad writing or a problem, I welcome you to correct me.
 
 
 
@@ -22,3 +22,4 @@
 关于作者
 ====================================
 + 热爱开源，热爱折腾的Java程序猿。更多个人信息和联系方式可以参照[GIS数据共享](https://www.qhftdx.cn/)。
++ 在我的博客和网站中很多内容都是使用英文来写，虽然英文底子不好，但平时喜欢用英文写，好吧，居然还有这种癖好的人，这就是我。
